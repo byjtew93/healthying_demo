@@ -1,0 +1,75 @@
+{
+  "recipes": {
+    "avocado_toasts": {
+      "name": "Toasts à l'avocat",
+      "steps": [
+        {
+          "instruction": "Couper l'avocat en deux",
+          "toolCategory": "SLICE"
+        },
+        {
+          "instruction": "Verser un filet d'huile dans la poële"
+        },
+        {
+          "instruction": "Faire dorer les tartines de pain dans la poële chaude",
+          "toolCategory": "STOVE",
+          "until": "bp1"
+        },
+        {
+          "instruction": "Écraser l'avocat en purée ou en fines tranches",
+          "toolCategory": "SLICE"
+        },
+        {
+          "instruction": "Mixer l'avocat",
+          "toolCategory": "MIXER",
+          "optional" : "true"
+        },
+        {
+          "instruction": "Mélanger les épices à l'avocat  ",
+          "toolCategory": "MILL",
+          "optional": "true"
+        },
+        {
+          "instruction": "Déposer et étaler l'avocat sur les tartines grillées.",
+          "breakpoint": "bp1",
+          "breakpointText": "Retirer les tartines de la poële !"
+        }
+      ],
+      "ingredients": [
+        {
+          "name": "Avocat",
+          "quantity": "1",
+          "category": "FRUIT"
+        },
+        {
+          "name": "Épices",
+          "category": "SPICE",
+          "optional": "true",
+          "additional": "Massalé, Poivre, Sel, Curry, Garam Massala ..."
+        },
+        {
+          "name": "Tartines de pain",
+          "quantity": "4",
+          "category": "OTHER"
+        }
+      ],
+      "categories": ["APPETIZER"]
+    }
+  },
+  "ingredients": [
+    {"name" :  "Avocat", "category":  "Fruit"},
+    {"name" :  "Epices", "category":  "Spice"},
+    {"name" :  "Pain", "category":  "Other"},
+    {"name" :  "Oignon", "category":  "Vegetable"},
+    {"name" :  "Aubergine", "category":  "Vegetable"},
+    {"name" :  "Concombre", "category":  "Vegetable"},
+    {"name" :  "Courgette", "category":  "Vegetable"},
+    {"name" :  "Echalotte", "category":  "Vegetable"},
+    {"name" :  "Salade", "category":  "Vegetable"},
+    {"name" :  "Lait", "category":  "Liquid"},
+    {"name" :  "Creme fraiche", "category":  "Liquid"},
+    {"name" :  "Tomate", "category":  "Vegetable"},
+    {"name" :  "Champignon", "category":  "Vegetable"},
+    {"name" :  "Citron", "category":  "Fruit"}
+  ]
+}
