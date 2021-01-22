@@ -35,7 +35,7 @@ class _StepInnerPageState extends State<StepInnerPage> with AutomaticKeepAliveCl
                   color: Colors.yellowAccent.withOpacity(.85),
                   boxShadow: [BoxShadow(offset: Offset(2, -2))],
                 ),
-                child: Text("Optionel !"),
+                child: Text("Optionnel !"),
               ),
             Container(
               height: size.height * .25,

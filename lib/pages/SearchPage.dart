@@ -11,73 +11,100 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<Ingredient> _ingredients;
+  final List<IngredientCategory> tabs = IngredientCategory.values;
+  Set<Ingredient> _ingredients = Set();
+  Set<Ingredient> _selected = Set();
 
   void _showDetails() {
-    List<Ingredient> ingredients = _ingredients.where((e) => e.isSelected).toList(); // TODO
-    print(ingredients);
-    showModalBottomSheet(context: context, builder: (_) => SearchDetailsPage(details: ingredients), elevation: 1);
+    showModalBottomSheet(context: context, builder: (_) => SearchDetailsPage(details: _selected), elevation: 1);
+  }
+
+  toggleSelected(Ingredient current) {
+    current.isSelected ? _selected.remove(current) : _selected.add(current);
+    current.toggleSelect();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.lightBlueAccent.shade50,
-      appBar: AppBar(
-        title: Text("Search Page"),
-      ),
-      body: SafeArea(
-        child: FutureBuilder(
-          future: DBUtils.getEveryIngredients().then((value) => _ingredients = value),
-          builder: (context, snap) {
-            if (snap.hasError)
-              return Center(child: Icon(Icons.error, color: Colors.red));
-            else if (!snap.hasData) return Center(child: CupertinoActivityIndicator());
-            setState(() {});
-            return GridView.builder(
-              physics: BouncingScrollPhysics(),
-              itemCount: _ingredients.length,
-              itemBuilder: (context, index) => GestureDetector(
-                onTap: () => setState(() => _ingredients.elementAt(index).toggleSelect()),
-                child: DetailGridItem(ingredient: _ingredients.elementAt(index)),
-              ),
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 1,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-              ),
-            );
-          },
+    return DefaultTabController(
+      length: tabs.length,
+      child: Scaffold(
+        backgroundColor: Colors.lightBlueAccent.shade50,
+        appBar: AppBar(
+          backgroundColor: Color(0xFF191919),
+          title: Text("Search Page"),
+          bottom: TabBar(
+            indicatorColor: Colors.white,
+            isScrollable: true,
+            tabs: [for (final tab in tabs) Tab(icon: tab.toIcon())],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.format_list_bulleted),
-        onPressed: _ingredients == null ? null : _showDetails,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.lightGreen,
-        shape: CircularNotchedRectangle(),
-        child: IconTheme(
-          data: IconThemeData(color: Colors.white),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Row(
-              children: [
-                IconButton(
-                  color: Colors.white.withOpacity(.95),
-                  icon: const Icon(Icons.menu, size: 30),
-                  onPressed: () => print("menu"),
+        body: SafeArea(
+          child: TabBarView(
+            children: [
+              for (final tab in tabs)
+                FutureBuilder(
+                  future: DBUtils.getEveryIngredients(category: tab).then((value) {
+                    _ingredients.addAll(value);
+                    return value;
+                  }),
+                  builder: (context, snap) {
+                    if (snap.hasError)
+                      return Center(child: Icon(Icons.error, color: Colors.red));
+                    else
+                      return Container(
+                        color: tab.toColor(),
+                        child: (!snap.hasData)
+                            ? Center(child: CupertinoActivityIndicator())
+                            : GridView.builder(
+                                physics: BouncingScrollPhysics(),
+                                itemCount: snap.data.length,
+                                itemBuilder: (context, index) => GestureDetector(
+                                  onTap: () => this.toggleSelected(snap.data.elementAt(index)),
+                                  child: DetailGridItem(ingredient: snap.data.elementAt(index)),
+                                ),
+                                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 250,
+                                  childAspectRatio: 1,
+                                  crossAxisSpacing: 5,
+                                  mainAxisSpacing: 0,
+                                ),
+                              ),
+                      );
+                  },
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 12),
-                  child: Text(
-                    "${_ingredients.fold(0, (p, c) => p + (c.isSelected ? 1 : 0))} items selected",
-                    style: TextStyle(color: Colors.white.withOpacity(.95), fontSize: 24),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.format_list_bulleted),
+          onPressed: _ingredients == null ? null : _showDetails,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.lightGreen,
+          shape: CircularNotchedRectangle(),
+          child: IconTheme(
+            data: IconThemeData(color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                children: [
+                  IconButton(
+                    color: Colors.white.withOpacity(.95),
+                    icon: const Icon(Icons.menu, size: 30),
+                    onPressed: () => print("menu"),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: Text(
+                      "${_selected.length} items selected",
+                      style: TextStyle(color: Colors.white.withOpacity(.95), fontSize: 24),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

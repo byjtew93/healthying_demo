@@ -3,7 +3,7 @@ import 'package:healthying/objects/Ingredient.dart';
 import 'package:healthying/pages/RecipeListPage.dart';
 
 class SearchDetailsPage extends StatefulWidget {
-  final List<Ingredient> details;
+  final Set<Ingredient> details;
 
   SearchDetailsPage({@required this.details});
 

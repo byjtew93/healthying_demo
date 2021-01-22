@@ -5,7 +5,7 @@ import 'package:healthying/objects/Recipe.dart';
 import 'package:healthying/services/DBUtils.dart';
 
 class RecipeListPage extends StatefulWidget {
-  final List<Ingredient> ingredients;
+  final Set<Ingredient> ingredients;
 
   RecipeListPage({this.ingredients});
 

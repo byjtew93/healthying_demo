@@ -18,13 +18,19 @@ abstract class DBUtils {
   static Future<Recipe> getRecipe(String id) async =>
       database['recipes'] is Map && database['recipes'].containsKey(id) ? Recipe.fromMap(database['recipes'][id]) : null;
 
-  static Future<List<Ingredient>> getEveryIngredients() async {
-    List<Ingredient> ingredients = List();
-    if (database['ingredients'] is List) database['ingredients'].forEach((e) => ingredients.add(Ingredient.fromMap(e)));
-    return ingredients;
+  static Set<Ingredient> _everyIngredients = new Set();
+
+  static Future<Set<Ingredient>> getEveryIngredients({IngredientCategory category}) async {
+    if (DBUtils._everyIngredients.isEmpty) {
+      print("> DB.getEveryIngredients()");
+      if (database['ingredients'] is List) database['ingredients'].forEach((e) => DBUtils._everyIngredients.add(Ingredient.fromMap(e)));
+      print("< DB.getEveryIngredients() with ${DBUtils._everyIngredients.length} elements");
+      DBUtils._everyIngredients.forEach((e) => print(e));
+    }
+    return category != null ? DBUtils._everyIngredients.where((e) => e.category == category).toSet() : DBUtils._everyIngredients;
   }
 
   // TODO:
-  static Future<List<Recipe>> getRecipesWithIngredients(List<Ingredient> ingredients) async =>
+  static Future<List<Recipe>> getRecipesWithIngredients(Set<Ingredient> ingredients) async =>
       await Future.delayed(Duration(seconds: 2), () => List.empty());
 }
