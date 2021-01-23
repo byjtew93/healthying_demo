@@ -62,8 +62,11 @@ class _StepPageState extends State<StepPage> with SingleTickerProviderStateMixin
                   print("onPageChanged: ($index) ");
                   _currentPageIndex = index;
                   print("animateTo(${(index / widget.recipe.steps.length)})");
-                  _progressController.animateTo((index / widget.recipe.steps.length) * 1.0,
-                      duration: Duration(milliseconds: 150), curve: Curves.decelerate);
+                  _progressController.animateTo(
+                    index / widget.recipe.steps.length,
+                    duration: Duration(milliseconds: 150),
+                    curve: Curves.decelerate,
+                  );
                 },
               ),
             ),

@@ -70,6 +70,14 @@
     {"name" :  "Creme fraiche", "category":  "Liquid"},
     {"name" :  "Tomate", "category":  "Vegetable"},
     {"name" :  "Champignon", "category":  "Vegetable"},
-    {"name" :  "Citron", "category":  "Fruit"}
+    {"name" :  "Citron", "category":  "Fruit"},
+    {"name" :  "Filet de poulet", "category":  "Meat"},
+    {"name" :  "Steak haché", "category":  "Meat"},
+    {"name" :  "Filet de colin", "category":  "Fish"},
+    {"name" :  "Saumon fumé", "category":  "Fish"},
+    {"name" :  "Pavé de saumon", "category":  "Fish"},
+    {"name" :  "Sardine à l'huile", "category":  "Fish"},
+    {"name" :  "Crevette", "category":  "Fish"},
+    {"name" :  "Bavette d'aloyau", "category":  "Meat"}
   ]
 }

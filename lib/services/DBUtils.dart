@@ -27,6 +27,7 @@ abstract class DBUtils {
       print("< DB.getEveryIngredients() with ${DBUtils._everyIngredients.length} elements");
       DBUtils._everyIngredients.forEach((e) => print(e));
     }
+    await Future.delayed(Duration(seconds: 1));
     return category != null ? DBUtils._everyIngredients.where((e) => e.category == category).toSet() : DBUtils._everyIngredients;
   }
 

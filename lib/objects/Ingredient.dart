@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:healthying/objects/passive/SelectableItem.dart';
+import 'package:healthying/objects/passive/QuantifiableIngredient.dart';
 
-class Ingredient extends SelectableItem {
+class Ingredient extends QuantifiableIngredient {
   final String name;
   final IngredientCategory category;
 
@@ -27,7 +27,7 @@ class Ingredient extends SelectableItem {
   }
 }
 
-enum IngredientCategory { FRUIT, VEGETABLE, MEAT, SPICE, LIQUID, OTHER }
+enum IngredientCategory { VEGETABLE, FRUIT, MEAT, FISH, SPICE, LIQUID, OTHER }
 
 extension IngredientCategoryExtension on IngredientCategory {
   String toCorrectString() => this.toString().substring(19);
@@ -35,15 +35,17 @@ extension IngredientCategoryExtension on IngredientCategory {
   Color toColor() {
     switch (this) {
       case IngredientCategory.FRUIT:
-        return Colors.yellowAccent;
+        return Colors.yellow;
       case IngredientCategory.VEGETABLE:
         return Colors.lightGreen;
       case IngredientCategory.MEAT:
         return Colors.red;
+      case IngredientCategory.FISH:
+        return Colors.blueAccent;
       case IngredientCategory.SPICE:
         return Colors.orangeAccent;
       case IngredientCategory.LIQUID:
-        return Colors.lightBlueAccent;
+        return Colors.lightBlueAccent.withOpacity(.5);
       default:
         return Colors.white;
     }
@@ -65,6 +67,8 @@ IngredientCategory stringToIngredientCategory(String category) {
       return IngredientCategory.VEGETABLE;
     case "MEAT":
       return IngredientCategory.MEAT;
+    case "FISH":
+      return IngredientCategory.FISH;
     case "SPICE":
       return IngredientCategory.SPICE;
     case "LIQUID":

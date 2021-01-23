@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:healthying/pages/SearchPage.dart';
+import 'package:healthying/pages/searchpage/SearchPage.dart';
 import 'package:healthying/services/DBUtils.dart';
 
 import 'RecipePage.dart';
